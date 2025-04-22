@@ -2,16 +2,17 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-center p-4 bg-white shadow-md rounded-b-lg fixed w-full top-0 z-50">
-      <ul className="flex gap-6 text-lg font-semibold">
+    <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-white bg-opacity-70 backdrop-blur-sm px-6 py-2 rounded-full shadow-lg">
+      <ul className="flex gap-4 text-sm md:text-base font-semibold text-green-700">
         <li>
-          <a href="#" className="hover:text-blue-500">
+          <a href="#" className="hover:underline">
             Beranda
           </a>
         </li>
+        <span className="text-green-500">|</span>
         <li>
-          <a href="#" className="hover:text-blue-500">
-            Data Story
+          <a href="#hasil" className="hover:underline">
+            Hasil Penelitian
           </a>
         </li>
       </ul>

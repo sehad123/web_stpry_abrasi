@@ -1,56 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const Slide4 = () => {
-  // Variasi animasi untuk elemen
-  const variants = {
-    hidden: { opacity: 0, y: 50 }, // Animasi awal (tersembunyi dan bergeser ke bawah)
-    visible: { opacity: 1, y: 0 }, // Animasi ketika muncul
-  };
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = document.getElementById("slide2");
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.75) {
+          setIsVisible(true);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center text-center bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/img/5.jpeg')" }}>
-      {/* Judul */}
-      <motion.h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-6" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5 }} variants={variants}>
-        Peta Persebaran Daerah Abrasi di Pulau Panaitan
+    <motion.section
+      id="slide2"
+      className="relative h-screen flex flex-col items-center justify-center text-center bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/img/2.jpeg')" }}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <motion.h2 className="text-3xl md:text-4xl mt-4 font-bold max-w-5xl text-center mb-6" initial={{ opacity: 0, y: -30 }} animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : -30 }} transition={{ duration: 0.6, delay: 0.2 }}>
+        Adakah cara untuk mengantisipasi pertumbuhan lahan terbangun yang pesat?
       </motion.h2>
 
-      {/* Gambar Peta dan Legenda */}
-      <motion.div className="w-full max-w-xl h-96 rounded-lg shadow-lg overflow-hidden flex" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7 }} variants={variants}>
-        {/* Gambar Peta */}
-        <div className="flex-grow">
-          <img src="/img/9.png" alt="Peta Persebaran Tingkat Prevalensi Stunting" className="w-full h-full object-cover" />
-        </div>
-        {/* Penjelasan Warna */}
-        <div className="w-48 flex flex-col justify-center items-start pl-4">
-          <motion.div className="flex items-center mb-2" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6, delay: 0.3 }} variants={variants}>
-            <span className="w-6 h-6 bg-red-500 inline-block mr-2"></span>
-            <span className="text-gray-700 text-sm">Rendah</span>
-          </motion.div>
-          <motion.div className="flex items-center" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6, delay: 0.5 }} variants={variants}>
-            <span className="w-6 h-6 bg-yellow-200 inline-block mr-2"></span>
-            <span className="text-gray-700 text-sm">Tinggi</span>
-          </motion.div>
+      {/* Konten Gambar dan Deskripsi */}
+      <motion.div
+        className="relative w-11/12 max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.9 }}
+        transition={{ duration: 0.6, delay: 0.6 }}
+      >
+        <div className="flex flex-col items-center">
+          {/* Gambar */}
+          <div className="w-full">
+            <img src="img/antisipasi/masalah.png" alt="Masalah Lahan Terbangun" className="w-full h-80 object-cover" />
+          </div>
+
+          {/* Deskripsi */}
+          <div className="p-6 text-left">
+            <p className="text-gray-700">
+              Pemerintah Provinsi Jawa Timur telah menyusun Rencana Tata Ruang Wilayah (RTRW) Provinsi Jawa Timur tahun 2023–2043 yang tertuang dalam Perda No. 10 Tahun 2023. Namun, apakah kondisi saat ini sudah sesuai dengan yang
+              direncanakan?
+            </p>
+            <p className="text-gray-700 mt-2">
+              Oleh karena itu, dilakukan penelitian ini untuk mengidentifikasi dan memprediksi perkembangan lahan terbangun, serta menganalisis perkembangannya di tahun 2029. Dengan mempertimbangkan faktor-faktor pendorong perkembangan
+              lahan terbangun, memanfaatkan data citra satelit, dan menggunakan metode analisis spasial, diharapkan dapat menjadi alternatif yang terjangkau dalam mengawasi dinamika perubahan penggunaan lahan secara berkala tanpa memerlukan
+              biaya operasional yang tinggi dan perangkat yang kompleks.
+            </p>
+            <p className="text-gray-700 mt-2 font-semibold">Yuk, kita simak hasilnya!</p>
+          </div>
         </div>
       </motion.div>
-
-      {/* Sumber Data */}
-      <motion.p className="text-sm text-gray-500 mt-3" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.6 }} variants={variants}>
-        Sumber: SSGI - Kemenkes
-      </motion.p>
-
-      {/* Deskripsi */}
-      <motion.div className="w-full max-w-5xl mt-4" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, delay: 0.8 }} variants={variants}>
-        <div className="flex items-center">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, fuga repellat. Beatae in assumenda sint recusandae ipsa repudiandae aspernatur repellendus voluptatem laboriosam eum. Odio, tempore dolorum magnam officiis voluptas
-            consequuntur incidunt adipisci quae totam. Consequuntur possimus facere amet! Maiores cupiditate quisquam molestiae error odit debitis a voluptatibus amet at alias minima quis quaerat accusantium, aspernatur tempora! Numquam ad
-            voluptate ea in veniam sit officia quidem, perferendis quam deserunt dignissimos itaque ducimus placeat est quis sunt esse voluptatibus et dolores porro cum accusamus temporibus eaque aliquam? Minus, numquam quos? Molestiae
-            iste, neque aliquam minima delectus fuga nemo dolore recusandae quos. Error.
-          </p>
-        </div>
-      </motion.div>
-    </section>
+    </motion.section>
   );
 };
 
